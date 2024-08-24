@@ -2,14 +2,17 @@
 #include "Graph.h"
 
 int main() {
-    int V;
+    int V, E;
     std::cout << "Enter number of vertices: ";
     std::cin >> V;
 
     Graph g(V);
 
+    std::cout << "Enter number of edges: ";
+    std::cin >> E;
+
     std::cout << "Enter the edges (as pairs of vertices):" << std::endl;
-    for (int i = 0; i < V - 1; ++i) {
+    for (int i = 0; i < E; ++i) {
         int v, w;
         std::cin >> v >> w;
         g.addEdge(v, w);
