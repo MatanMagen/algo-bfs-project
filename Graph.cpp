@@ -46,12 +46,12 @@ void Graph::BFS(int start, int end) {
 
     // Output the result
     if (path.front() == start) {
-        std::cout << "Shortest path from " << start << " to " << end << " is: ";
-        for (int v : path) {
-            if (v + 1 <= V) {
-                std::cout << v << " " << v + 1 << std::endl;
+        std::cout << "Shortest path from " << start << " to " << end << " is: "<< std::endl ;
+        for (auto it = path.begin(); it != path.end(); ++it) {
+            auto next_it = std::next(it);
+            if (next_it != path.end()) {
+                std::cout << *it << " " << *next_it << std::endl;
             }
-            std::cout << " ";
         }
         std::cout << std::endl;
         std::cout << "Distance is: " << path.size() - 1 << std::endl;
