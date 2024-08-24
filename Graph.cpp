@@ -48,7 +48,10 @@ void Graph::BFS(int start, int end) {
     if (path.front() == start) {
         std::cout << "Shortest path from " << start << " to " << end << " is: ";
         for (int v : path) {
-            std::cout << v << " ";
+            if (v + 1 <= V) {
+                std::cout << v << " " << v + 1 << std::endl;
+            }
+            std::cout << " ";
         }
         std::cout << std::endl;
         std::cout << "Distance is: " << path.size() - 1 << std::endl;
