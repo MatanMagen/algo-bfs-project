@@ -1,13 +1,12 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <unordered_map>
-#include <list>
 #include <vector>
+#include <list>
 
 class Graph {
     int V; // Number of vertices
-    std::unordered_map<int, std::list<int>> adjList; // Adjacency list
+    std::vector<std::list<int>> adjList; // Adjacency list
 
 public:
     // Constructor

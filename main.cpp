@@ -2,7 +2,7 @@
 #include "Graph.h"
 
 int main() {
-    int V, E;
+    int V;
     std::cout << "Enter number of vertices: ";
     std::cin >> V;
 
