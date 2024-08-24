@@ -1,61 +1,58 @@
-#include "Graph.h"
 #include <iostream>
 #include <vector>
 #include <list>
 
-Graph::Graph(int V) {
-    this->V = V;
-    adjList.resize(V + 1);
+class Graph {
+public:
+    Graph(int vertices);
+    void addEdge(int u, int v);
+    void BFS(int start, int end);
+
+private:
+    int vertices;
+    std::vector<std::vector<int>> adjList;
+};
+
+Graph::Graph(int vertices) : vertices(vertices) {
+    adjList.resize(vertices);
 }
 
-void Graph::addEdge(int v, int w) {
-    adjList[v].push_back(w);
-    adjList[w].push_back(v); // For an undirected graph
+void Graph::addEdge(int u, int v) {
+    adjList[u].push_back(v);
 }
 
 void Graph::BFS(int start, int end) {
-    std::vector<bool> visited(V + 1, false); // Visited vector
-    std::vector<int> parent(V + 1, -1); // To store the parent of each vertex
+    std::vector<int> d(vertices, vertices + 1); // Distance array, initialized to a large value
+    std::vector<int> p(vertices, -1); // Parent array
+    std::list<int> q; // Queue for BFS
 
-    std::list<int> q; // Queue implemented using list
+    d[start] = 0;
     q.push_back(start);
-    visited[start] = true;
 
     while (!q.empty()) {
         int node = q.front();
         q.pop_front();
 
-        // If we reached the end, break
-        if (node == end) break;
-
-        // Explore neighbors
-        for (auto neighbor : adjList[node]) {
-            if (!visited[neighbor]) {
-                visited[neighbor] = true;
-                parent[neighbor] = node;
+        for (int neighbor : adjList[node]) {
+            if (d[neighbor] == vertices + 1) { // If the neighbor hasn't been visited
+                d[neighbor] = d[node] + 1;
+                p[neighbor] = node;
                 q.push_back(neighbor);
             }
         }
     }
 
-    // Reconstruct the path
-    std::list<int> path;
-    for (int v = end; v != -1; v = parent[v]) {
-        path.push_front(v);
-    }
-
-    // Output the result
-    if (path.front() == start) {
-        std::cout << "Shortest path from " << start << " to " << end << " is: "<< std::endl ;
-        for (auto it = path.begin(); it != path.end(); ++it) {
-            auto next_it = std::next(it);
-            if (next_it != path.end()) {
-                std::cout << *it << " " << *next_it << std::endl;
-            }
+    if (p[end] == -1) {
+        std::cout << "No path from " << start << " to " << end << std::endl;
+    } else {
+        std::cout << "Shortest path from " << start << " to " << end << ": ";
+        for (int at = end; at != -1; at = p[at]) {
+            std::cout << at << " ";
         }
         std::cout << std::endl;
-        std::cout << "Distance is: " << path.size() - 1 << std::endl;
-    } else {
-        std::cout << "No path exists between " << start << " and " << end << std::endl;
     }
+
+
+
+
 }
